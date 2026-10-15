@@ -1,7 +1,7 @@
 /* ==========================================================================
    Lyvo One – Interim Landingpage
    Tokens 1:1 aus den Figma-Variablen (Collection 1) und Textstilen.
-   Mobile first, Desktop-Layout ab 768px.
+   Mobile first, Desktop-Layout ab 1024px.
    ========================================================================== */
 
 /* Design Tokens
@@ -9,8 +9,8 @@
 :root {
   /* color */
   --color-dark: #1f141e;
-  --color-dark-subtle: rgb(31 20 30 / 0.6);
-  --color-dark-muted: rgb(31 20 30 / 0.3);
+  --color-dark-subtle: rgb(31 20 30 / 0.7);
+  --color-dark-muted: rgb(31 20 30 / 0.4);
   --color-dark-20: rgb(31 20 30 / 0.2);
   --color-dark-10: rgb(31 20 30 / 0.1);
   --color-dark-5: rgb(31 20 30 / 0.05);
@@ -22,6 +22,7 @@
   --color-light-10: rgb(255 255 255 / 0.15);
   --color-light-5: rgb(255 255 255 / 0.05);
   --color-light-0: rgb(255 255 255 / 0);
+  --color-error: #b14945;
 
   /* spacing */
   --spacing-xx-small: 2px;
@@ -45,9 +46,11 @@
   /* typography */
   --font-family: "Zalando Sans", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   --font-size-text: 20px;
+  --font-size-form: 16px;
   --font-size-meta: 14px;
-  --line-height: 1.4;        /* Textstil "text" */
-  --line-height-tight: 1.3;  /* Textstil "h3", Meta-Links, Bildunterschrift */
+  --font-size-cta: 12px;
+  --line-height: 1.4;        /* Textstile "text", "h3", "form-text", "meta" */
+  --line-height-tight: 1.3;  /* Bildunterschrift */
   --paragraph-spacing: 10px; /* nach Zwischenüberschriften */
 
   --transition: 150ms ease-out;
@@ -128,10 +131,21 @@ body {
   line-height: var(--line-height);
 }
 
+.text p + p {
+  margin-top: var(--spacing-medium);
+}
+
 .h3 {
   font-size: var(--font-size-text);
   font-weight: 500;
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height);
+}
+
+/* Textstil "meta" */
+.meta-text {
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height);
+  color: var(--color-dark-subtle);
 }
 
 /* Komponenten
@@ -156,7 +170,7 @@ body {
   justify-content: center;
   border-radius: var(--radius-small);
   font-size: var(--font-size-meta);
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height);
   color: var(--color-dark);
   text-decoration: underline;
   text-decoration-thickness: from-font;
@@ -169,7 +183,7 @@ body {
   color: var(--color-dark-subtle);
 }
 
-/* Inline-Links im Fließtext (Impressum) */
+/* Inline-Links im Fließtext */
 .text-link {
   text-decoration: underline;
   text-decoration-thickness: from-font;
@@ -177,12 +191,83 @@ body {
   transition: color var(--transition);
 }
 
-.text-link--plain {
-  text-decoration: none;
-}
-
 .text-link:hover {
   color: var(--color-dark-subtle);
+}
+
+/* button – type=primary (Textstil "cta") */
+.button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 var(--spacing-large);
+  border: 0;
+  border-radius: var(--radius-small);
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  font-family: inherit;
+  font-size: var(--font-size-cta);
+  font-weight: 500;
+  font-stretch: 110%;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transition);
+}
+
+.button:hover {
+  background-color: var(--color-dark-subtle);
+}
+
+.button:disabled {
+  cursor: progress;
+  background-color: var(--color-dark-subtle);
+}
+
+/* Eingabefeld (Textstil "form-text") */
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 56px;
+  padding: var(--spacing-small) var(--spacing-medium);
+  border: 0;
+  border-radius: var(--radius-small);
+  background-color: var(--color-dark-10);
+  color: var(--color-dark);
+  font-family: inherit;
+  font-size: var(--font-size-form);
+  line-height: var(--line-height);
+}
+
+.input::placeholder {
+  color: var(--color-dark-muted);
+  opacity: 1;
+}
+
+/* form – Newsletter */
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+}
+
+.newsletter__row {
+  display: flex;
+  gap: var(--spacing-small);
+}
+
+.newsletter__error {
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height);
+  color: var(--color-error);
+}
+
+[hidden] {
+  display: none !important;
 }
 
 /* Seitenlayout – Mobile
@@ -193,7 +278,7 @@ body {
   gap: var(--spacing-large);
   min-height: 100vh;
   min-height: 100svh;
-  padding: var(--spacing-large);
+  padding: var(--spacing-xx-large) var(--spacing-large);
 }
 
 .site-main {
@@ -211,8 +296,10 @@ body {
 }
 
 /* Home */
-.page--home .site-main {
-  flex: 1 0 auto;
+.page--home .site-footer {
+  /* Figma: Links direkt unter dem Hinweistext, linksbündig */
+  justify-content: flex-start;
+  margin-top: 0;
 }
 
 .hero {
@@ -221,11 +308,11 @@ body {
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-small);
   object-fit: cover;
+  object-position: 100% 100%;
 }
 
 .intro {
   display: flex;
-  flex: 1 0 auto;
   flex-direction: column;
   gap: var(--spacing-large);
 }
@@ -235,15 +322,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-large);
-}
-
-.team__text {
-  /* Figma: maximale Textbreite */
-  max-width: 672px;
-}
-
-.team__text p + p {
-  margin-top: var(--spacing-medium);
 }
 
 .team__member {
@@ -268,33 +346,43 @@ body {
   white-space: nowrap;
 }
 
-/* Impressum */
-.imprint {
-  /* Figma: maximale Textbreite wie auf "Wer wir sind" */
-  max-width: 672px;
+/* Impressum und Datenschutz */
+.legal {
+  max-width: 496px;
 }
 
-.imprint section > * + * {
+.legal section > * + * {
   margin-top: var(--spacing-medium);
 }
 
-.imprint h2 + * {
+.legal .h3 + * {
   margin-top: var(--paragraph-spacing);
 }
 
-.imprint section + section {
+.legal section + section {
   /* Leerzeile (1 × Zeilenhöhe) + 2 × Absatzabstand */
   margin-top: calc(var(--font-size-text) * var(--line-height) + 2 * var(--spacing-medium));
 }
 
-/* Seitenlayout – Desktop (ab 768px)
+/* Seitenlayout – Tablet
    ========================================================================== */
-@media (min-width: 768px) {
+@media (min-width: 600px) {
+  .hero {
+    aspect-ratio: 3 / 2;
+    object-position: 64% 100%;
+  }
+}
+
+/* Seitenlayout – Desktop (ab 1024px)
+   Linke Spalte: Logo oben, Navigation unten. Ihre Breite entspricht einer von
+   drei Spalten mit spacing/x-large Abstand (Figma: 442.67px bei 1440px).
+   ========================================================================== */
+@media (min-width: 1024px) {
   .page {
+    container-type: inline-size;
     display: grid;
-    /* Logo-Spalte: 360px wie im Figma-Update, auf schmalen Desktops anteilig */
-    grid-template-columns: min(360px, 30%) minmax(0, 1fr);
-    grid-template-rows: 1fr auto;
+    grid-template-columns: calc((100% - 2 * var(--spacing-x-large)) / 3) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
     gap: var(--spacing-large);
     padding: var(--spacing-large);
   }
@@ -310,72 +398,61 @@ body {
 
   .site-main {
     grid-column: 2;
-    grid-row: 1;
-    align-items: flex-start;
+    grid-row: 1 / -1;
   }
 
+  /* Navigation bleibt unten links im Viewport */
   .site-footer {
-    grid-column: 2;
-    grid-row: 2;
+    position: sticky;
+    bottom: var(--spacing-large);
+    grid-column: 1;
+    grid-row: 3;
+    align-self: end;
+    justify-content: flex-start;
     margin-top: 0;
   }
 
-  /* Breite einer Spalte innerhalb des zweispaltigen Inhaltsbereichs */
-  .col {
-    width: calc((100% - var(--spacing-large)) / 2);
-  }
-
-  /* Home: passt ohne Scrollen in den Viewport. Die Spalten sind dieselben wie
-     auf den anderen Seiten – reicht die Höhe nicht, wird das Bild beschnitten. */
-  .page--home {
-    height: 100svh;
-    grid-template-rows: minmax(0, 1fr) auto;
-  }
-
+  /* Home: Text und Formular unten in der linken Spalte, Bild füllt die rechte */
   .page--home .site-main {
-    min-height: 0;
-    height: 100%;
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
   }
 
   .hero {
-    /* Reicht die Höhe trotzdem nicht, schrumpft das Bild weiter statt zu scrollen */
-    flex: 0 1 auto;
-    height: auto;
-    min-height: 0;
-    max-height: 100%;
-    aspect-ratio: 3 / 2;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    /* Bildgröße soll die Zeilenhöhen nicht beeinflussen */
+    contain: size;
+    object-position: 64% 100%;
   }
 
   .intro {
-    flex: none;
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
   }
 
-  /* Team */
+  /* Team: Text so breit wie die linke Spalte, Porträt rechtsbündig */
   .team {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) min(320px, 32%);
-    /* Figma: spacing/big (192px) bei 1440px, darunter proportional kleiner */
-    column-gap: clamp(var(--spacing-large), 13.33vw, var(--spacing-big));
-    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .team__text {
+    flex: none;
+    width: calc((100cqi - 2 * var(--spacing-x-large)) / 3);
   }
 
   .team__member {
-    width: 100%;
-  }
-
-  /* Team und Impressum: Footer bleibt unten rechts im Viewport */
-  .page--team,
-  .page--imprint {
-    grid-template-rows: 1fr;
-  }
-
-  .page--team .site-footer,
-  .page--imprint .site-footer {
-    position: sticky;
-    bottom: var(--spacing-large);
-    grid-column: 2;
-    grid-row: 1;
-    align-self: end;
-    justify-self: end;
+    flex: 0 1 320px;
+    width: auto;
+    min-width: 0;
+    margin-left: var(--spacing-large);
   }
 }

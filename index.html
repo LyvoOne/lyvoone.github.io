@@ -39,9 +39,26 @@
            width="1008" height="672"
            alt="Frau steht auf Felsen an der Küste und blickt aufs Meer">
 
-      <div class="intro col">
-        <p class="text">Wir alle wünschen uns mehr Zeit bei guter Gesundheit. Wir wollen dich dabei unterstützen und begleiten – egal ob du Klarheit durch eine Diagnose suchst oder eine Reise zum Durchatmen.</p>
-        <p class="h3">Start Ende 2026.</p>
+      <div class="intro">
+        <div class="text">
+          <p>Wir alle wünschen uns mehr Zeit bei guter Gesundheit. Wir wollen dich dabei unterstützen und begleiten – egal ob du Klarheit durch eine Diagnose suchst oder eine Reise zum Durchatmen. Wir starten Ende 2026.</p>
+          <p>Wenn du schon vorab informiert werden möchtest, melde dich zu unserem Newsletter an und erhalte spannende Artikel, hilfreiche Tipps für den Alltag und erste Einblicke, noch bevor es losgeht.</p>
+        </div>
+
+        <!-- TODO Newsletter: data-endpoint auf die Anmelde-URL des Newsletter-Anbieters setzen -->
+        <form class="newsletter" method="post" novalidate data-endpoint="">
+          <div class="newsletter__row">
+            <label class="visually-hidden" for="newsletter-email">E-Mail Adresse</label>
+            <input class="input" id="newsletter-email" type="email" name="email"
+                   placeholder="E-Mail Adresse" autocomplete="email" required
+                   aria-describedby="newsletter-error">
+            <button class="button" type="submit">Anmelden</button>
+          </div>
+          <p class="newsletter__error" id="newsletter-error" hidden>Die angegebene E-Mail Adresse ist leider nicht korrekt formatiert. Bitte überprüfe die Eingabe erneut.</p>
+        </form>
+        <p class="newsletter__success h3" role="status" hidden></p>
+
+        <p class="meta-text">Du kannst dich jederzeit wieder vom Newsletter abmelden. Weitere Informationen findest du in unserer <a class="text-link" href="datenschutz.html">Datenschutzerklärung</a>.</p>
       </div>
     </main>
 
@@ -50,5 +67,7 @@
       <a class="meta-link" href="impressum.html">Impressum</a>
     </footer>
   </div>
+
+  <script src="js/newsletter.js" defer></script>
 </body>
 </html>
