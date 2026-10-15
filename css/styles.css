@@ -464,5 +464,8 @@ body {
     width: auto;
     min-width: 0;
     margin-left: var(--spacing-large);
+    /* Porträt bleibt beim Scrollen des Textes oben rechts stehen */
+    position: sticky;
+    top: var(--spacing-large);
   }
 }
