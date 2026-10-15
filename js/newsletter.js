@@ -6,7 +6,6 @@
   if (!form) return;
 
   var input = form.querySelector("input[type=email]");
-  var button = form.querySelector("button[type=submit]");
   var error = form.querySelector(".newsletter__error");
   var success = document.querySelector(".newsletter__success");
   var invalidMessage = error.textContent;
@@ -35,10 +34,9 @@
   input.addEventListener("input", clearError);
 
   form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
     var email = input.value.trim();
     if (!EMAIL_PATTERN.test(email)) {
+      event.preventDefault();
       showError(invalidMessage);
       input.focus();
       return;
@@ -46,22 +44,17 @@
 
     // Bots füllen das versteckte Feld aus – dann nichts senden.
     if (form.elements.email_confirm.value) {
+      event.preventDefault();
       showSuccess(email);
       return;
     }
 
-    // CleverReach erlaubt keine CORS-Antwort: Die Anfrage wird gesendet,
-    // das Ergebnis ist aber nicht lesbar. Nur Netzwerkfehler landen im catch.
-    button.disabled = true;
-    fetch(form.action, { method: "POST", mode: "no-cors", body: new URLSearchParams(new FormData(form)) })
-      .then(function () {
-        showSuccess(email);
-      })
-      .catch(function () {
-        showError("Die Anmeldung hat leider nicht geklappt. Bitte versuche es später erneut.");
-      })
-      .finally(function () {
-        button.disabled = false;
-      });
+    // Gültige Adresse: Das Formular wird ganz normal an CleverReach gesendet,
+    // wie im Branch "newsletter". Die Antwort lädt im unsichtbaren iframe
+    // (target="newsletter-frame"), deshalb bleibt die Seite stehen.
+    input.value = email;
+    setTimeout(function () {
+      showSuccess(email);
+    }, 0);
   });
 })();
