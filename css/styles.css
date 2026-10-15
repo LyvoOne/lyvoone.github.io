@@ -248,6 +248,16 @@ body {
   opacity: 1;
 }
 
+/* state=focus: 2px Rahmen innen, Platzhalter ausgeblendet */
+.input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--color-dark);
+}
+
+.input:focus::placeholder {
+  color: transparent;
+}
+
 /* form – Newsletter */
 .newsletter {
   display: flex;
