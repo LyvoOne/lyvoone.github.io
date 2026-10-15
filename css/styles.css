@@ -225,7 +225,6 @@ body {
 
 .intro {
   display: flex;
-  flex: 1 0 auto;
   flex-direction: column;
   gap: var(--spacing-large);
 }
@@ -235,6 +234,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-small);
+}
+
+/* Mobil: Leerzeile (1 × Zeilenhöhe) zusätzlich zum Abstand nach dem Intro */
+.page--home .newsletter {
+  margin-top: calc(var(--font-size-text) * var(--line-height));
 }
 
 .newsletter__text,
@@ -384,12 +388,42 @@ body {
      auf den anderen Seiten – reicht die Höhe nicht, wird das Bild beschnitten. */
   .page--home {
     height: 100svh;
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr);
   }
 
+  /* Main spannt beide Spalten, damit das Formular unter dem Logo stehen kann */
   .page--home .site-main {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    /* Freier Platz geht an die Formular-Zeile, nicht unter das Bild */
+    grid-template-rows: minmax(0, auto) auto 1fr;
     min-height: 0;
     height: 100%;
+  }
+
+  /* Main überlagert die Logo-Spalte, das Logo bleibt klickbar */
+  .page--home .site-header {
+    z-index: 1;
+  }
+
+  .page--home .hero,
+  .page--home .intro {
+    grid-column: 2;
+  }
+
+  /* Links, erst unterhalb des Intro-Texts */
+  .page--home .newsletter {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: end;
+    margin-top: 0;
+  }
+
+  .page--home .site-footer {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
   }
 
   .hero {
@@ -399,10 +433,6 @@ body {
     min-height: 0;
     max-height: 100%;
     aspect-ratio: 3 / 2;
-  }
-
-  .intro {
-    flex: none;
   }
 
   /* Team */
