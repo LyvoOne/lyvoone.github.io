@@ -271,9 +271,15 @@ body {
 }
 
 .newsletter__error {
+  display: none;
   font-size: var(--font-size-meta);
   line-height: var(--line-height);
   color: var(--color-error);
+}
+
+/* state=error ohne JavaScript: erst nach einer Eingabe bzw. einem Absendeversuch */
+.newsletter:has(.input:user-invalid) .newsletter__error {
+  display: block;
 }
 
 [hidden] {
