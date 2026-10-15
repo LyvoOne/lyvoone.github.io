@@ -44,18 +44,17 @@
       return;
     }
 
-    var endpoint = form.dataset.endpoint;
-    if (!endpoint) {
-      // TODO Newsletter: Solange kein Anbieter angebunden ist, wird nur der Erfolgszustand gezeigt.
-      console.warn("Newsletter: kein data-endpoint gesetzt – Anmeldung wird nicht übertragen.");
+    // Bots füllen das versteckte Feld aus – dann nichts senden.
+    if (form.elements.email_confirm.value) {
       showSuccess(email);
       return;
     }
 
+    // CleverReach erlaubt keine CORS-Antwort: Die Anfrage wird gesendet,
+    // das Ergebnis ist aber nicht lesbar. Nur Netzwerkfehler landen im catch.
     button.disabled = true;
-    fetch(endpoint, { method: "POST", body: new FormData(form) })
-      .then(function (response) {
-        if (!response.ok) throw new Error(response.status);
+    fetch(form.action, { method: "POST", mode: "no-cors", body: new URLSearchParams(new FormData(form)) })
+      .then(function () {
         showSuccess(email);
       })
       .catch(function () {

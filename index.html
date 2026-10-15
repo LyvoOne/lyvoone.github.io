@@ -45,8 +45,11 @@
           <p>Wenn du schon vorab informiert werden möchtest, melde dich zu unserem unregelmäßig erscheinenden Newsletter an und erhalte spannende Artikel, hilfreiche Tipps für den Alltag und erste Einblicke, noch bevor es losgeht.</p>
         </div>
 
-        <!-- TODO Newsletter: data-endpoint auf die Anmelde-URL des Newsletter-Anbieters setzen -->
-        <form class="newsletter" method="post" novalidate data-endpoint="">
+        <!-- Anmeldung über CleverReach (Double-Opt-in), übernommen aus dem Branch "newsletter" -->
+        <form class="newsletter" method="post" novalidate
+              action="https://flow.cleverreach.com/fl/96a1c6e2-1c4d-45d0-9d26-79041d62513a/confirm">
+          <!-- Honeypot gegen Spam-Bots -->
+          <input type="text" name="email_confirm" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important">
           <div class="newsletter__row">
             <label class="visually-hidden" for="newsletter-email">E-Mail Adresse</label>
             <input class="input" id="newsletter-email" type="email" name="email"
