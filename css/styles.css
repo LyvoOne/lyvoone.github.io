@@ -230,6 +230,61 @@ body {
   gap: var(--spacing-large);
 }
 
+/* Newsletter-Anmeldung */
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+}
+
+.newsletter__text,
+.newsletter__label {
+  font-size: var(--font-size-meta);
+  line-height: var(--line-height-tight);
+}
+
+.newsletter__label {
+  margin-top: var(--spacing-small);
+  font-weight: 500;
+}
+
+.newsletter__field {
+  display: flex;
+  gap: var(--spacing-small);
+}
+
+.newsletter__input,
+.newsletter__button {
+  /* min. 16px, sonst zoomt iOS beim Fokus */
+  font: inherit;
+  font-size: 16px;
+  line-height: var(--line-height-tight);
+  padding: var(--spacing-small) var(--spacing-medium);
+  border-radius: var(--radius-small);
+}
+
+.newsletter__input {
+  flex: 1;
+  min-width: 0;
+  color: var(--color-dark);
+  background-color: var(--color-light);
+  /* Kontrast der Feldgrenze >= 3:1 (WCAG 1.4.11) */
+  border: 1px solid var(--color-dark-subtle);
+}
+
+.newsletter__button {
+  border: 1px solid var(--color-dark);
+  color: var(--color-light);
+  background-color: var(--color-dark);
+  cursor: pointer;
+  text-decoration-thickness: from-font;
+  text-underline-position: from-font;
+}
+
+.newsletter__button:hover {
+  text-decoration: underline;
+}
+
 /* Team */
 .team {
   display: flex;
